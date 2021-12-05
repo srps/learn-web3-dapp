@@ -21,7 +21,7 @@ In `pages/api/near/connect.ts`, implement `connection` by creating a `Connection
 // Do not forget we're in an "async" world,
 // so you may need to "await" some results.
 try {
-  const config = configFromNetwork(NETWORK);
+  const config = configFromNetwork(network);
   const near = undefined;
   const provider = undefined
   const status = undefined;
@@ -44,7 +44,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```typescript
 // solution
 try {
-  const config = configFromNetwork(NETWORK);
+  const config = configFromNetwork(network);
   const near = await connect(config);
   const provider = near.connection.provider;
   const status = await provider.status();
@@ -64,9 +64,7 @@ try {
 
 # ✅ Make sure it works
 
-Once the code is complete and the file has been saved, refresh the page to see it update & display the current version.
-
-![](https://raw.githubusercontent.com/figment-networks/learn-web3-dapp/main/markdown/__images__/near/near-connect.gif)
+Once the code in `pages/api/near/connect.ts` is complete, click the blue button to connect to NEAR & display the current version.
 
 ---
 

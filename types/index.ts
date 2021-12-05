@@ -1,3 +1,5 @@
+import type {Dispatch, SetStateAction} from 'react';
+
 export enum CHAINS {
   ARWEAVE = 'arweave',
   AVALANCHE = 'avalanche',
@@ -82,40 +84,40 @@ export enum CHAIN_PROVIDERS {
 
 // NETWORKS ----------------------
 export enum AVALANCHE_NETWORKS {
-  MAINNET = 'MAINNET',
-  FUJI = 'FUJI',
-  DATAHUB = 'datahub',
+  TESTNET = 'Testnet',
+  DATAHUB = 'Datahub',
 }
 
 export enum CELO_NETWORKS {
-  MAINNET = 'MAINNET',
-  ALFAJORES = 'alfajores',
+  TESTNET = 'Alfajores',
+  DATAHUB = 'Datahub',
 }
 
 export enum SECRET_NETWORKS {
   MAINNET = 'MAINNET',
-  TESTNET = 'HOLODECK-2',
-}
-
-export enum NEAR_NETWORKS {
-  MAINNET = 'MAINNET',
-  TESTNET = 'TESTNET',
+  TESTNET = 'SUPERNOVA-2',
   DATAHUB = 'datahub',
 }
 
+export enum NEAR_NETWORKS {
+  TESTNET = 'Testnet',
+  DATAHUB = 'Datahub',
+}
+
 export enum TEZOS_NETWORKS {
-  MAINNET = 'MAINNET',
-  TESTNET = 'TESTNET',
+  TESTNET = 'Hangzhounet',
+  DATAHUB = 'Datahub',
 }
 
 export enum POLKADOT_NETWORKS {
-  WESTEND = 'WESTEND',
-  MAINNET = 'MAINNET',
+  TESTNET = 'Westend',
+  DATAHUB = 'Datahub',
 }
 
 export enum POLYGON_NETWORKS {
   MAINNET = 'MAINNET',
   TESTNET = 'TESTNET',
+  DATAHUB = 'datahub',
 }
 
 export enum SOLANA_NETWORKS {
@@ -140,10 +142,11 @@ export enum THE_GRAPH_NETWORKS {
 
 export enum ARWEAVE_NETWORKS {
   MAINNET = 'mainnet',
+  TESTNET = 'TESTNET',
+  DATAHUB = 'datahub',
 }
 
 // -----------------------------
-
 export type NETWORKS =
   | POLYGON_NETWORKS
   | AVALANCHE_NETWORKS
@@ -157,6 +160,13 @@ export type NETWORKS =
   | CERAMIC_NETWORKS
   | TEZOS_NETWORKS
   | ARWEAVE_NETWORKS;
+
+// -----------------------------
+export enum NETWORK {
+  DATAHUB,
+  TESTNET,
+  LOCALNET,
+}
 
 // ---------------------------------------------------
 export type ChainType = {
@@ -213,8 +223,7 @@ export type ProtocolStateT = {
   network: NETWORKS;
   protocol: PROTOCOLS;
   isActive: boolean;
-  // numberOfSteps
-  numberOfStep: number;
+  numberOfSteps: number;
   currentStepId: PROTOCOL_STEPS_ID;
   firstStepId: PROTOCOL_STEPS_ID;
   lastStepId: PROTOCOL_STEPS_ID;
@@ -225,7 +234,6 @@ export type ProtocolStateT = {
 export type ProtocolStepT = {
   id: PROTOCOL_STEPS_ID;
   title: string;
-  isVisited: boolean;
   isSkippable: boolean;
   isOneColumn: boolean;
   isCompleted: boolean;
@@ -300,3 +308,13 @@ export enum PROTOCOL_STEPS_ID {
   SUBGRAPH_SCHEMA = 'SUBGRAPH_SCHEMA',
   SUBGRAPH_MAPPINGS = 'SUBGRAPH_MAPPINGS',
 }
+
+// Near type
+export type CheckAccountIdT = {
+  network: string;
+  freeAccountId: string;
+  setFreeAccountId: Dispatch<SetStateAction<string>>;
+  setIsFreeAccountId: Dispatch<SetStateAction<boolean>>;
+};
+
+export type AlertT = 'success' | 'info' | 'warning' | 'error' | undefined;

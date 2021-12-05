@@ -1,12 +1,5 @@
 import {Web3AuthProvider} from '@figment-ceramic/context/idx';
-import Layout from 'components/shared/Layout';
-import React from 'react';
-import {
-  CERAMIC_NETWORKS,
-  CERAMIC_PROTOCOLS,
-  ChainType,
-  PROTOCOL_STEPS_ID,
-} from 'types';
+import {CERAMIC_NETWORKS, CERAMIC_PROTOCOLS, PROTOCOL_STEPS_ID} from 'types';
 import Nav from '@figment-ceramic/components/nav';
 import {
   BasicProfile,
@@ -14,18 +7,15 @@ import {
   CustomDefinition,
   LogIn,
 } from '@figment-ceramic/components/steps';
-import {
-  getCurrentChainId,
-  getCurrentStepIdForCurrentChain,
-  useGlobalState,
-} from 'context';
+import {useGlobalState} from 'context';
+import {getChainId, getStepId} from 'utils/context';
 import {getNodeURL} from 'utils/datahub';
 import LocalStorageIdentityStore from '@figment-ceramic/lib/identityStore/LocalStorage';
 
 const Ceramic: React.FC = () => {
   const {state} = useGlobalState();
-  const chainId = getCurrentChainId(state);
-  const stepId = getCurrentStepIdForCurrentChain(state);
+  const chainId = getChainId(state);
+  const stepId = getStepId(state);
   const nodeUrl = getNodeURL(
     chainId,
     CERAMIC_NETWORKS.TESTNET,
@@ -50,11 +40,4 @@ const Ceramic: React.FC = () => {
   );
 };
 
-const WithLayoutCeramic: React.FC<{chain: ChainType; markdown: any}> = ({
-  chain,
-  markdown,
-}) => {
-  return Layout(Ceramic, chain, markdown);
-};
-
-export default WithLayoutCeramic;
+export default Ceramic;

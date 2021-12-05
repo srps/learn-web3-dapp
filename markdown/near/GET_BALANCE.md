@@ -12,8 +12,7 @@ In `pages/api/near/balance.ts`, implement the default function. You must replace
 
 ```typescript
   try {
-      const { NETWORK, ACCOUNT_ID } = req.body;
-      const config = configFromNetwork(NETWORK);
+      const config = configFromNetwork(network);
       const client = await connect(config);
       const account = undefined;
       const balance = undefined;
@@ -36,10 +35,9 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```typescript
 // solution
   try {
-      const { NETWORK, ACCOUNT_ID } = req.body;
-      const config = configFromNetwork(NETWORK);
+      const config = configFromNetwork(network);
       const client = await connect(config);
-      const account = await client.account(ACCOUNT_ID);
+      const account = await client.account(accountId);
       const balance = await account.getAccountBalance();
       return res.status(200).json(balance.available)
   }
@@ -47,7 +45,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 
 **What happened in the code above?**
 
-- First, we create an `account` object, representing our account. Pass the `ACCOUNT_ID` as the only argument.
+- First, we create an `account` object, representing our account. Pass the `accountId` as the only argument.
 - Next, we call the `getAccountBalance` method, which returns the calculated account balance. The `AccountBalance` type has four properties; `total`, `stateStaked`, `staked` and `available`. A calculated balance might contain some staked NEAR tokens, but right now we haven't got anything staked so don't worry about this.
 
 {% hint style="tip" %}
@@ -58,9 +56,7 @@ The amount returned by `getAccountBalance` is denominated in **yoctoNEAR**, so t
 
 # ✅ Make sure it works
 
-Once the code is complete and the file is saved, Next.js will rebuild the API route. Click on **Check Balance** and you should see the balance displayed on the page:
-
-![](https://raw.githubusercontent.com/figment-networks/learn-web3-dapp/main/markdown/__images__/near/near-balance.gif)
+Once the code in `pages/api/near/balance.ts` is complete, Next.js will rebuild the API route. Click on **Check Balance** and you should see the balance displayed on the page.
 
 ---
 

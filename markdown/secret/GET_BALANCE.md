@@ -1,4 +1,4 @@
-Now that you have created an account on the **Secret** `holodeck-2` network, and funded it using the faucet - We're going to check the balance of our account to make sure everything went alright.
+Now that you have created an account on the **Secret** `supernova-2` network, and funded it using the faucet - We're going to check the balance of our account to make sure everything went alright.
 
 {% hint style="info" %}
 The native token on the **Secret Network** is **SCRT**
@@ -16,7 +16,7 @@ In `pages/api/secret/balance.ts`, implement the default function. You must repla
 
 ```typescript
   try {
-    const url = await getSafeUrl()
+    const url = getNodeUrl();
     const { address }= req.body
     const client = new CosmWasmClient(url)
 
@@ -38,7 +38,7 @@ In `pages/api/secret/balance.ts`, implement the default function. You must repla
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
 
 {% hint style="danger" %}
-You could experience some issues with the availability of the network. [**Click here to check the current status of `holodeck-2`**](https://secretnodes.com/secret/chains/holodeck-2)
+You could experience some issues with the availability of the network. [**Click here to check the current status of `supernova-2`**](https://secretnodes.com/secret/chains/supernova-2)
 {% endhint %}
 
 ---
@@ -48,7 +48,7 @@ You could experience some issues with the availability of the network. [**Click 
 ```typescript
 // solution
   try {
-    const url = await getSafeUrl()
+    const url = getNodeUrl();
     const { address }= req.body
     const client = new CosmWasmClient(url);
 
@@ -77,12 +77,10 @@ The amount returned by is denominated in **μSCRT**, so to convert it to **SCRT*
 
 # ✅ Make sure it works
 
-Once the code is complete and the file is saved, Next.js will rebuild the API route. Click on **Check Balance** and you should see the balance displayed on the page:
-
-![](https://raw.githubusercontent.com/figment-networks/learn-web3-dapp/main/markdown/__images__/secret/secret-balance.gif)
+Once the code in `pages/api/secret/balance.ts` is complete, Next.js will rebuild the API route. Click on **Check Balance** and you should see the account balance displayed on the page.
 
 ---
 
 # 🏁 Conclusion
 
-100 **SCRT** available, hmmm ... seems it's more than enough to do our first transfer. In the next step, we're going to buy an imaginary pizza which means making a transfer of tokens!
+1000 **SCRT** available, hmmm ... seems it's more than enough to do our first transfer. In the next step, we're going to buy an imaginary pizza which means making a transfer of tokens!

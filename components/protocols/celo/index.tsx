@@ -1,57 +1,34 @@
-import {useEffect, useReducer} from 'react';
-import {
-  Connect,
-  Account,
-  Balance,
-  Transfer,
-  Swap,
-  Deploy,
-  Getter,
-  Setter,
-} from '@figment-celo/components/steps';
-import {
-  appStateReducer,
-  initialState,
-  CeloContext,
-} from '@figment-celo/context';
-import {useLocalStorage} from '@figment-celo/hooks';
-import {PROTOCOL_STEPS_ID, ChainType} from 'types';
-import Layout from 'components/shared/Layout';
-import Nav from './components/nav';
-import {getCurrentStepIdForCurrentChain, useGlobalState} from 'context';
+import ProtocolNav from 'components/shared/ProtocolNav/ProtocolNav';
+import {getInnerState, getStepId} from 'utils/context';
+import {PROTOCOL_STEPS_ID} from 'types';
+import {useGlobalState} from 'context';
+
+import * as Steps from '@figment-celo/components';
+import {accountExplorer} from '@figment-celo/lib';
 
 const Celo: React.FC = () => {
-  const {state: global_state} = useGlobalState();
-  const stepId = getCurrentStepIdForCurrentChain(global_state);
-
-  const [storageState, setStorageState] = useLocalStorage('celo', initialState);
-  const [state, dispatch] = useReducer(appStateReducer, storageState);
-
-  useEffect(() => {
-    setStorageState(state);
-  }, [state]);
+  const {state} = useGlobalState();
+  const {address, network} = getInnerState(state);
+  const stepId = getStepId(state);
 
   return (
-    <CeloContext.Provider value={{state, dispatch}}>
+    <>
+      <ProtocolNav
+        address={address}
+        network={network}
+        accountExplorer={accountExplorer(network)}
+      />
       {stepId === PROTOCOL_STEPS_ID.PROJECT_SETUP}
-      {stepId === PROTOCOL_STEPS_ID.CHAIN_CONNECTION && <Connect />}
-      {stepId === PROTOCOL_STEPS_ID.CREATE_ACCOUNT && <Account />}
-      {stepId === PROTOCOL_STEPS_ID.GET_BALANCE && <Balance />}
-      {stepId === PROTOCOL_STEPS_ID.TRANSFER_TOKEN && <Transfer />}
-      {stepId === PROTOCOL_STEPS_ID.SWAP_TOKEN && <Swap />}
-      {stepId === PROTOCOL_STEPS_ID.DEPLOY_CONTRACT && <Deploy />}
-      {stepId === PROTOCOL_STEPS_ID.GET_CONTRACT_VALUE && <Getter />}
-      {stepId === PROTOCOL_STEPS_ID.SET_CONTRACT_VALUE && <Setter />}
-      <Nav />
-    </CeloContext.Provider>
+      {stepId === PROTOCOL_STEPS_ID.CHAIN_CONNECTION && <Steps.Connect />}
+      {stepId === PROTOCOL_STEPS_ID.CREATE_ACCOUNT && <Steps.Account />}
+      {stepId === PROTOCOL_STEPS_ID.GET_BALANCE && <Steps.Balance />}
+      {stepId === PROTOCOL_STEPS_ID.TRANSFER_TOKEN && <Steps.Transfer />}
+      {stepId === PROTOCOL_STEPS_ID.SWAP_TOKEN && <Steps.Swap />}
+      {stepId === PROTOCOL_STEPS_ID.DEPLOY_CONTRACT && <Steps.Deploy />}
+      {stepId === PROTOCOL_STEPS_ID.GET_CONTRACT_VALUE && <Steps.Getter />}
+      {stepId === PROTOCOL_STEPS_ID.SET_CONTRACT_VALUE && <Steps.Setter />}
+    </>
   );
 };
 
-const WithLayoutCelo: React.FC<{chain: ChainType; markdown: any}> = ({
-  chain,
-  markdown,
-}) => {
-  return Layout(Celo, chain, markdown);
-};
-
-export default WithLayoutCelo;
+export default Celo;

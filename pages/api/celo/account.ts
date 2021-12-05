@@ -1,5 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-import {getSafeUrl} from '@figment-celo/lib';
+import {getNodeUrl} from '@figment-celo/lib';
 import {newKit} from '@celo/contractkit';
 
 type ResponseT = {
@@ -7,20 +7,21 @@ type ResponseT = {
   secret: string;
 };
 export default async function connect(
-  _req: NextApiRequest,
+  req: NextApiRequest,
   res: NextApiResponse<ResponseT | string>,
 ) {
   try {
-      const url = getSafeUrl();
-      const kit = newKit(url);
-      const account = undefined;
-      const address = undefined;
-      const secret = undefined;
+    const {network} = req.body;
+    const url = getNodeUrl(network);
+    const kit = newKit(url);
+    const account = undefined;
+    const address = undefined;
+    const secret = undefined;
 
-      res.status(200).json({
-          address,
-          secret
-      })
+    res.status(200).json({
+      address,
+      secret,
+    });
   } catch (error) {
     let errorMessage = error instanceof Error ? error.message : 'Unknown Error';
     res.status(500).json(errorMessage);

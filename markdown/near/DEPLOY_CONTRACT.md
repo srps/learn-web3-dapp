@@ -14,7 +14,7 @@ If you want to learn more about NEAR smart contracts, you can follow the tutoria
 # 🏋️ Challenge
 
 {% hint style="tip" %}
-In`pages/api/near/deploy.ts`, implement the default function. Deploy your first smart contract on the **NEAR** testnet. You must replace any instances of `undefined` with working code to accomplish this.
+In `pages/api/near/deploy.ts`, implement the default function. Deploy your first smart contract on the **NEAR** testnet. You must replace any instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out.**
@@ -22,15 +22,14 @@ In`pages/api/near/deploy.ts`, implement the default function. Deploy your first 
 ```tsx
 //...
   try {
-    const { NETWORK, ACCOUNT_ID, SECRET } = req.body;
-    const config = configFromNetwork(NETWORK);
-    const keypair = KeyPair.fromString(SECRET);
+    const config = configFromNetwork(network);
+    const keypair = KeyPair.fromString(secret);
 
     // Again you will need to set your keystore
     config.keyStore?.undefined;
 
     const near = await connect(config);
-    const account = await near.account(ACCOUNT_ID);
+    const account = await near.account(accountId);
 
     // Time to deploy the Smart Contract
     const response = undefined;
@@ -53,12 +52,11 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 // solution
 //...
   try {
-    const { NETWORK, ACCOUNT_ID, SECRET } = req.body;
-    const config = configFromNetwork(NETWORK);
-    const keypair = KeyPair.fromString(SECRET);
-    config.keyStore?.setKey("testnet", ACCOUNT_ID, keypair);
+    const config = configFromNetwork(network);
+    const keypair = KeyPair.fromString(secret);
+    config.keyStore?.setKey("testnet", accountId, keypair);
     const near = await connect(config);
-    const account = await near.account(ACCOUNT_ID);
+    const account = await near.account(accountId);
     const response = await account.deployContract(fs.readFileSync(WASM_PATH));
     return res.status(200).json(response.transaction.hash);
   }
@@ -75,9 +73,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 
 # ✅ Make sure it works
 
-Once you have the code above saved, click on **Deploy Contract**
-
-![](https://raw.githubusercontent.com/figment-networks/learn-web3-dapp/main/markdown/__images__/near/near-deploy.gif)
+Once the code in `pages/api/near/deploy.ts` is complete, click on **Deploy Contract** to send the compiled smart contract to NEAR.
 
 ---
 

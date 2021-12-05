@@ -9,7 +9,7 @@ If you want to learn more about NEAR smart contracts, you can follow the tutoria
 # 🏋️ Challenge
 
 {% hint style="tip" %}
-In`pages/api/near/getter.ts`, implement the default function. You must replace any instances of `undefined` with working code to accomplish this.
+In `pages/api/near/getter.ts`, implement the default function. You must replace any instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out.**
@@ -17,10 +17,9 @@ In`pages/api/near/getter.ts`, implement the default function. You must replace a
 ```tsx
 //...
   try {
-    const { NETWORK, ACCOUNT_ID  } = req.body;
-    const config = configFromNetwork(NETWORK);
+    const config = configFromNetwork(network);
     const near = await connect(config);
-    const account = await near.account(ACCOUNT_ID);
+    const account = await near.account(accountId);
     // Using viewFunction, try to call the contract
     const response = undefined;
     return res.status(200).json(response)
@@ -42,14 +41,13 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 // solution
 //...
   try {
-    const { NETWORK, ACCOUNT_ID  } = req.body;
-    const config = configFromNetwork(NETWORK);
+    const config = configFromNetwork(network);
     const near = await connect(config);
-    const account = await near.account(ACCOUNT_ID);
+    const account = await near.account(accountId);
     const response = await account.viewFunction(
-        ACCOUNT_ID,
+        accountId,
         "get_greeting",
-        {account_id: ACCOUNT_ID}
+        {account_id: accountId}
     );
     return res.status(200).json(response)
   }
@@ -68,9 +66,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 
 # ✅ Make sure it works
 
-Once you have the code above saved, click the button and watch the magic happen:
-
-![](https://raw.githubusercontent.com/figment-networks/learn-web3-dapp/main/markdown/__images__/near/near-getter.gif)
+Once the code in `pages/api/near/getter.ts` is complete, click the **Get Message** button to fetch the value stored in the smart contract and display it on the page.
 
 ---
 

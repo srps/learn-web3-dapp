@@ -15,7 +15,7 @@ In `pages/api/secret/connect.ts`, implement the function and try to establish yo
 ```typescript
 //...
 try {
-    const url = await getSafeUrl();
+    const url = getNodeUrl();
     const client = undefined;
     const nodeInfo = undefined;
     const version = undefined;
@@ -38,7 +38,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```typescript
 // solution
 try {
-    const url = await getSafeUrl();
+    const url = getNodeUrl();
     const client = new CosmWasmClient(url);
     const nodeInfo = await client.restClient.nodeInfo();
     const version = nodeInfo.application_version.version;
@@ -48,7 +48,7 @@ try {
 
 **What happened in the code above?**
 
-- First, we instantiate a new `CosmWamClient` passing the url of the `holodeck-2` network.
+- First, we instantiate a new `CosmWamClient` passing the url of the `supernova-2` network.
 - Next, using the `nodeInfo` method of the rest client returns a `NodeInfoResponse`.
 - Inspecting the methods of our object will lead us naturally to reference the `application_version.version` property.
 - Finally, we send the `version` back to the client-side as JSON.
@@ -57,9 +57,7 @@ try {
 
 # ✅ Make sure it works
 
-Once the code is complete and the file has been saved, refresh the page to see it update & display the current version.
-
-![](https://raw.githubusercontent.com/figment-networks/learn-web3-dapp/main/markdown/__images__/secret/secret-connect.gif)
+Once the code in `pages/api/secret/connect.ts` is complete, click on the blue button to connect to Secret & display the current version.
 
 ---
 

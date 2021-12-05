@@ -14,7 +14,11 @@ In `pages/api/near/keypair.ts`, implement `keypair` and retrieve the string form
   try {
     const keypair = undefined;
     const secret = undefined;
-    return res.status(200).json(secret);
+    const address = undefined;
+    if (!secret || !address) {
+      throw new Error('Please complete the code.');
+    }
+    return res.status(200).json({address, secret});
   }
 ```
 
@@ -34,7 +38,11 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
   try {
     const keypair = KeyPair.fromRandom('ed25519');
     const secret = keypair.toString();
-    return res.status(200).json(secret);
+    const address = keypair.getPublicKey().toString();
+    if (!secret || !address) {
+      throw new Error('Please complete the code.');
+    }
+    return res.status(200).json({address, secret});
   }
 ```
 
@@ -42,16 +50,13 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 
 - First, we create a random `keypair` using the `ed25519` cryptographic curve.
 - Next, we retrieve the string formatted representation of the `secret` key.
+- Next, we retrieve the string formatted representation of the `address`.
 
 ---
 
 # ✅ Make sure it works
 
-Once the code is complete and the file is saved, Next.js will rebuild the API route. Now click on **Generate a Keypair** and you should see:
-
-![](https://raw.githubusercontent.com/figment-networks/learn-web3-dapp/main/markdown/__images__/near/near-keypair.gif)
-
----
+## Once the code in `pages/api/near/keypair.ts` is complete, Next.js will rebuild the API route. Now click on **Generate a Keypair** to make your first NEAR keypair.
 
 # 🏁 Conclusion
 
